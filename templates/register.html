@@ -1,31 +1,86 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 <!-- inheriting from the layout.html -->
 <!-- allowing the content in the body to be able to ovewrite what is in the block content -->
 <!-- content section is a style that is already available in the main.css -->
 <!-- the below method of post and then an empty string means that when this form is posted it goes to the same route that we are currently i -->
 <!-- the hidden _tag is used to ensure CSRF as a security measure -->
 {% block content %}
-	<div class = 'content-section'>
-		<form method ='POST' action =''>
+	<div class = "content-section">
+		<form method ="POST" action ="">
 			{{ form.hidden_tag() }}
-			<fieldset  class ='form-group'>
-				<legend class = 'border-bottom mb-4'> Join the class today</legend>
-				<dir class = 'form-group'>
-					{{ form.username.label(class = 'form-control-label') }}
-					{{ form.username(class = 'form-control form-control-lg') }}
-				</dir>
-				<dir class = 'form-group'>
-					{{ form.email.label(class = 'form-control-label') }}
-					{{ form.email(class = 'form-control form-control-lg') }}
-				</dir>
-				<dir class = 'form-group'>
-					{{ form.password.label(class = 'form-control-label') }}
-					{{ form.password(class = 'form-control form-control-lg') }}
-				</dir>
+			<fieldset  class ="form-group">
+				<legend class = "border-bottom mb-4"> Join the class today</legend>
+				<div class = "form-group">
+					{{ form.username.label(class = "form-control-label") }}
+					{% if form.username.errors %}
+						{{ form.username(class = "form-control form-control-lg is-invalid") }}
+						<div class = "invalid-feedback">
+							{% for error in form.username.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+							
+						</div>
+					{% else %}
+						{{ form.username(class = "form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class = "form-group">
+					{{ form.email.label(class = "form-control-label") }}
+					{% if form.email.errors %}
+						{{ form.email(class = "form-control form-control-lg is-invalid") }}
+						<div class = "invalid-feedback">
+							{% for error in form.email.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+							
+						</div>
+					{% else %}
+						{{ form.email(class = "form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class = "form-group">
+					{{ form.password.label(class = "form-control-label") }}
+					{% if form.password.errors %}
+						{{ form.password(class = "form-control form-control-lg is-invalid") }}
+						<div class = "invalid-feedback">
+							{% for error in form.password.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+							
+						</div>
+					{% else %}
+						{{ form.password(class = "form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class = "form-group">
+					{{ form.password_confirmation.label(class = "form-control-label") }}
+					{% if form.password_confirmation.errors %}
+						{{ form.password_confirmation(class = "form-control form-control-lg is-invalid") }}
+						<div class = "invalid-feedback">
+							{% for error in form.password_confirmation.errors %}
+								<span>{{ error }}</span>
+							{% endfor %}
+							
+						</div>
+					{% else %}
+						{{ form.password_confirmation(class = "form-control form-control-lg") }}
+					{% endif %}
+				</div>
 				
 			</fieldset>
+			<div class = "form-group">
+					{{ form.submit.label(class = "btn btn-outline-info") }}
+				</div>
+				<small class = "text-muted ml-2">
+					<a href="#">Forgot Password?</a>
+				</small>
 			
 		</form>
-			}
+	</div>
+	<div class = "border-top pt-3">
+		<small class = "text-muted">
+			Do You Need An Account? <a class ="ml-2" href="{{ url_for("register") }}"> Sign Up Now</a>
+		</small>
+		
 	</div>
 {% endblock content %}

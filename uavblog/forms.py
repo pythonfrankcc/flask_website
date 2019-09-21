@@ -19,13 +19,11 @@ class RegistrationForm(FlaskForm):
 
 
 	def validate_username(self,username):
-		if username.data != current_user. username:
 			user = User.query.filter_by(username = username.data).first()
 			if user:
-				raise ValidationError('That username is already takem.Please choose a different one.')
+				raise ValidationError('That username is already taken.Please choose a different one.')
 
 	def validate_email(self,email):
-		if email.data != current_user.email:
 			user = User.query.filter_by(email = email.data).first()
 			if user:
 				raise ValidationError('That email already exists')
@@ -52,11 +50,13 @@ class UpdateAccountForm(FlaskForm):
 
 
 	def validate_username(self,username):
-		user = User.query.filter_by(username = username.data).first()
-		if user:
-			raise ValidationError('That username is already takem.Please choose a different one.')
+		if username.data != current_user. username:
+			user = User.query.filter_by(username = username.data).first()
+			if user:
+				raise ValidationError('That username is already takem.Please choose a different one.')
 
 	def validate_email(self,email):
-		user = User.query.filter_by(email = email.data).first()
-		if user:
-			raise ValidationError('That email already exists')
+		if username.data != current_user. username:
+			user = User.query.filter_by(email = email.data).first()
+			if user:
+				raise ValidationError('That email already exists')

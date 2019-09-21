@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect,request
 from uavblog import app, db, bcrypt
-from uavblog.forms import RegistrationForm, LoginForm
+from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from datetime import datetime
 from uavblog.models import User, Post
 from flask_login import login_user,current_user, logout_user, login_required
@@ -67,7 +67,10 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-@app.route("/account")
+@app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+  form = UpdateAccountForm()
+  image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+  return render_template('account.html', title='Account',
+                           image_file=image_file, form=form)

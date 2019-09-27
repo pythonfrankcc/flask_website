@@ -21,7 +21,7 @@ class User(db.Model):
     #the posts in thhis model is not a column but is only used to show the relationship with the Post model while the backref allows us to get the user who created the Post
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+        return f"User('{self.tutor_username}', '{self.email}', '{self.image_file}')"
 #__scr__ or __rpr_ shows how you want the user to look like when you print   
 
 

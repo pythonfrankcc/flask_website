@@ -3,7 +3,7 @@
 from flask import Flask
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from flask_bcrypt import Bcrypt
+from flask_bcrypt import Bcrypt#this is a hashing module that prevents people from acquiring the login credentials in plain text even if the database is compromised
 from flask_login import LoginManager
 #remember that anytime python imports sth from a module it still gets to run the entire module
 

@@ -38,11 +38,11 @@ def register():
         return redirect(url_for('home'))
     form = RegistrationForm()#creating an instance of the registration form
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.tutor_username.data, email=form.email.data, password=hashed_password)
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')#this is a situation when you weant it to be a string rather than a byte
+        user = User(tutor_username=form.tutor_username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash(f"Account for {form.tutor_username.data}","success")#this is the creation of a flash message with the second parameter in the message allowing you to have a category
+        flash(f"Your Account has been created !You can now log in!","success")#this is the creation of a flash message with the second parameter in the message allowing you to have a category
         return redirect(url_for('login'))#this redirects one back to the homepage on registration with this being the function that is the home page
     return render_template('register.html', title='Register', form=form)
 
@@ -84,7 +84,7 @@ def account():
     flash('Your account has been updated!', 'success')
     return redirect(url_for('account'))
   elif request.method == 'GET':
-    form.tutor_username.data = current_user.username
+    form.tutor_username.data = current_user.tutor_username
     form.email.data = current_user.email
   image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
   return render_template('account.html', title='Account',

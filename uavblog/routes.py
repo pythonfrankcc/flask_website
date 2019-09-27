@@ -41,13 +41,14 @@ def register():
         user = User(username=form.tutor_username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash("Your account has been created! Thank you !You are now able to log in", "success")#this is the creation of a flash message
-        return redirect(url_for('login'))#this redirects one back to the homepage on registration
+        flash(f"Account for {form.tutor_username.data}","success")#this is the creation of a flash message with the second parameter in the message allowing you to have a category
+        return redirect(url_for('login'))#this redirects one back to the homepage on registration with this being the function that is the home page
     return render_template('register.html', title='Register', form=form)
 
 
 
 @app.route("/login",methods=["GET", "POST"])
+#this allows the page to accept the post request that you send to it by filling data in the various fields
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -61,6 +62,7 @@ def login():
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template("login.html", title="Login", form=form)
+#if parameters dont match it returns one to the login page again
 
 @app.route("/logout")
 def logout():

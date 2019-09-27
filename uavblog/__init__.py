@@ -8,6 +8,7 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 
+#the secret key helps also stop the modification of the secure cookies that we created in the remember me for login credentials
 app.config["SECRET_KEY"]="fc29601ad9a75c5a35e421fd9d546aa4ec3ef1052e"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)

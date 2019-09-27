@@ -3,11 +3,14 @@
 <!-- allowing the content in the body to be able to ovewrite what is in the block content -->
 {% block content %}
 	{% for post in posts %}
+  <!-- look at the first tutorial for the original code though it was less appealing but atleast you could input large sums of data -->
 		<article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ post.author }}</a>
               <small class="text-muted">{{ post.date_posted }}</small>
+              <!-- the templating engine that flask uses is ginger 2 which allows the use of code blocks-->
+              <!-- printing a variable is not the same as a code block so you use double curly braces -->
             </div>
             <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>
@@ -91,3 +94,4 @@
         </article>
 	{% endfor %}
 {% endblock content %}
+<!-- ginger two allows you to put the name of the block that you want to overwrite in the end of the code block -->

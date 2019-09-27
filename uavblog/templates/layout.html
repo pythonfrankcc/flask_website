@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!-- this serves as or parent template from which all will inherit from -->
+  <!-- the block is a part of the code that the child templates can overwrite -->
+	<!-- this serves as or parent template from which all will inherit from ,that is,it allows template inheritance-->
 	<!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="main.css") }}">
-    <!-- this links main.css in the static to the main css -->
+    <!-- this links main.css in the static to the main css since url helps you to locate the actual locatio of the url -->
 
 	{% if title %}
 		<title>Unmanned Aerial Vehicle Design -{{ title }}</title>		
@@ -49,6 +50,7 @@
 	<main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
+          <!-- the below function will help you to be able to acquire the flash messages and display them in each of your pages  -->
           {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
               {% for category, message in messages %}
@@ -59,6 +61,7 @@
             {% endif %}
           {% endwith %}
           {% block content %}{% endblock %}
+          <!-- this is the point at which the overwrite is going to take place in the othe template pages. -->
         </div>
         <div class="col-md-4">
           <div class="content-section">

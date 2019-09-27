@@ -1,3 +1,4 @@
+'''route decorators to the various pages'''
 from flask import render_template, url_for, flash, redirect,request
 from uavblog import app, db, bcrypt
 from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm

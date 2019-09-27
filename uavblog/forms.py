@@ -1,3 +1,5 @@
+'''the database structure of the site'''
+#remember on importation of a module python runs the whole module
 from flask_wtf import FlaskForm#uses this instead of the html creation of the forms
 from flask_login import current_user
 from wtforms import StringField#enables us to create strings for usernames and other string fields
@@ -34,7 +36,7 @@ class LoginForm(FlaskForm):
 	email = StringField("Email",validators =[DataRequired(),Email])#want the users to login using the email instead of username
 	password = PasswordField("Password",validators=[DataRequired(),Length(min=6,max=10)])
 	#password_confirmation = Password("Password Confirmation",validators = [DataRequired(),EqualTo("password")]) no longer required as they confirmed the password during registration
-	remember = BooleanField("Remember Me")#allows users to stayed login for sometime after thir browser closes using secure cookie
+	remember = BooleanField("Remember Me")#allows users to stayed login for sometime after the browser closes using secure cookie
 	submit = SubmitField("Login")
 
 

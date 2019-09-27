@@ -1,4 +1,4 @@
-#the job left for this is to only run the app
+'''runiing the app'''
 from uavblog import app 
 
 if __name__ == "__main__":

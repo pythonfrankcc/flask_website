@@ -5,6 +5,7 @@ from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from datetime import datetime
 from uavblog.models import User, Post
 from flask_login import login_user,current_user, logout_user, login_required
+#the login_required module ensures that you cannot view the account page until you have been logged in 
 
 
 posts = [
@@ -57,9 +58,10 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user, remember=form.remember.data)
-            next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('home'))
+            login_user(user, remember=form.remember.data) 
+            next_page = request.args.get('next')#args is a dictionary but avoid accessing next using the square brackets and key name as that would throw an error if the key name doesnt exist so just use the get method
+            return redirect(next_page) if next_page else redirect(url_for('home'))#this is a ternary conditional in python
+            #the part above just makes sure that if there is a next query on the url on page we can acquire it to directly take the user to the next page without having to take the user to another page and basically improves user experience 
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template("login.html", title="Login", form=form)
@@ -88,4 +90,4 @@ def account():
     form.email.data = current_user.email
   image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
   return render_template('account.html', title='Account',
-                           image_file=image_file, form=form)
+                           image_file=image_file, form=form)  

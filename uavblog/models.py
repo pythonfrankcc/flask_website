@@ -5,12 +5,13 @@ from uavblog import db,login_manager
 from flask_login import UserMixin
 #remember that anytime python imports a module it runs the entire module 
 
-
+''''this reloads the user from the user id stored in the session'''
+#the extension expects the user model to have atributes such as: is authenticated ,is active,is anonymous,get id but this is done for us by the UserMixin 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     '''creates the User relational table'''
     id = db.Column(db.Integer, primary_key=True)
     tutor_username = db.Column(db.String(20), unique=True, nullable=False)

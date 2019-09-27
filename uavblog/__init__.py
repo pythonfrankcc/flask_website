@@ -4,7 +4,7 @@ from flask import Flask
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt#this is a hashing module that prevents people from acquiring the login credentials in plain text even if the database is compromised
-from flask_login import LoginManager
+from flask_login import LoginManager#is used to manage user sessions in the background
 #remember that anytime python imports sth from a module it still gets to run the entire module
 
 app = Flask(__name__)
@@ -18,8 +18,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)#handles all the user sessions in the background thus works in the models.py
-login_manager.login_view = 'login'
-login_manager.login_message_category = 'info'
+login_manager.login_view = 'login'#this is similar to what we would save in the url_for account this tells the login extension where to get the login page
+login_manager.login_message_category = 'info'#changes the category of the flash messages with a  bootstrap class 'info'
 
 #mind the positioning of the importation so as to avoid circular importation since the routes are making the importation of the app
 from uavblog import routes

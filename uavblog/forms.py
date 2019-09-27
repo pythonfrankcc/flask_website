@@ -1,4 +1,5 @@
 '''the database structure of the site'''
+#here you import what you have pip installed
 #remember on importation of a module python runs the whole module
 from flask_wtf import FlaskForm#uses this instead of the html creation of the forms
 from flask_login import current_user

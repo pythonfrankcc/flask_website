@@ -1,4 +1,4 @@
-'''initializinng of the project as an app'''
+'''initializinng of the project as a package and also ties together what we need for our app'''
 #we get to import all the external modules at this point and create the necessary instances
 from flask import Flask
 from datetime import datetime
@@ -21,5 +21,5 @@ login_manager = LoginManager(app)#handles all the user sessions in the backgroun
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
-#mind the positioning of the importation so as to avoid circular importation
+#mind the positioning of the importation so as to avoid circular importation since the routes are making the importation of the app
 from uavblog import routes

@@ -53,13 +53,13 @@ class UpdateAccountForm(FlaskForm):
 
 
 	def validate_username(self,tutor_username):
-		if tutor_username.data != current_user. tutor_username:
+		if tutor_username.data != current_user.tutor_username:
 			user = User.query.filter_by(tutor_username = tutor_username.data).first()
 			if user:
 				raise ValidationError('That username is already takem.Please choose a different one.')
 
 	def validate_email(self,email):
-		if tutor_username.data != current_user. tutor_username:
+		if tutor_username.data != current_user.tutor_username:
 			user = User.query.filter_by(email = email.data).first()
 			if user:
 				raise ValidationError('That email already exists')

@@ -80,14 +80,18 @@ def account():
     if form.picture.data:
       picture_file = save_picture(form.picture.data)
       current_user.image_file = picture_file
-    current_user.username = form.tutor_username.data
+    current_user.tutor_username = form.tutor_username.data#made easier by using sql_Alchemy
     current_user.email = form.email.data
     db.session.commit()
     flash('Your account has been updated!', 'success')
     return redirect(url_for('account'))
-  elif request.method == 'GET':
+    #it is best that you do a redirect before you return a render as it results to no resubmission of posts method since a redirect sends out a get method instead of post
+  elif request.method == 'GET':#this is used to populate the account in advance
     form.tutor_username.data = current_user.tutor_username
     form.email.data = current_user.email
+    #this is the default path of the image_file
   image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+  #instead you could have used an f'string 
   return render_template('account.html', title='Account',
                            image_file=image_file, form=form)  
+#this allows you to pass in the image file onto the accounts template as a variable image file

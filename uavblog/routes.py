@@ -1,4 +1,7 @@
 '''route decorators to the various pages'''
+import secret#allows you to create a bunch of random names as the extension file for naming
+import os#allows you to upload file as the extension that they uploades
+from PIL import Image
 from flask import render_template, url_for, flash, redirect,request
 from uavblog import app, db, bcrypt
 from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
@@ -72,6 +75,24 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+
+'''saving the profile picture by a user'''
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)#randomizing the name of the image so as not to collide with what we already have in the databasae acting as the base of our file name
+    _, f_ext = os.path.splitext(form_picture.filename)#the underscore allows us to throw away the variable name
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/procfile_pics', picture_fn)#joining all the paths together
+    #resizing the image before upload to minimise the amount of space taken up by the picture and also speed up the website
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+
+    form_picture.save(picture_path)
+
+
+    return picture_fn
+
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -84,6 +105,7 @@ def account():
     current_user.email = form.email.data
     db.session.commit()
     flash('Your account has been updated!', 'success')
+    #getting an update on an account overwrites on the existent account
     return redirect(url_for('account'))
     #it is best that you do a redirect before you return a render as it results to no resubmission of posts method since a redirect sends out a get method instead of post
   elif request.method == 'GET':#this is used to populate the account in advance

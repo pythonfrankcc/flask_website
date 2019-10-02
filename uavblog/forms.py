@@ -2,6 +2,7 @@
 #here you import what you have pip installed
 #remember on importation of a module python runs the whole module
 from flask_wtf import FlaskForm#uses this instead of the html creation of the forms
+from flask_wtf.file FileField,FileAllowed#allows only specific files to be taken 
 from flask_login import current_user
 from wtforms import StringField#enables us to create strings for usernames and other string fields
 from wtforms import PasswordField,SubmitField,BooleanField
@@ -47,6 +48,8 @@ class UpdateAccountForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=20)])
 	email = StringField('Email',
                         validators=[DataRequired(), Email()])
+	picture = FileField('Update Profile Picture',validators=[FileAllowed(['png','jpg'])])
+
 	submit = SubmitField("Update")
 
 
@@ -56,7 +59,7 @@ class UpdateAccountForm(FlaskForm):
 		if tutor_username.data != current_user.tutor_username:
 			user = User.query.filter_by(tutor_username = tutor_username.data).first()
 			if user:
-				raise ValidationError('That username is already takem.Please choose a different one.')
+				raise ValidationError('That username is already taken.Please choose a different one.')
 
 	def validate_email(self,email):
 		if tutor_username.data != current_user.tutor_username:

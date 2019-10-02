@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm#uses this instead of the html creation of the fo
 from flask_wtf.file FileField,FileAllowed#allows only specific files to be taken 
 from flask_login import current_user
 from wtforms import StringField#enables us to create strings for usernames and other string fields
-from wtforms import PasswordField,SubmitField,BooleanField
+from wtforms import PasswordField,SubmitField,BooleanField,TextAreaField
 from wtforms.validators import DataRequired, Length ,Email,EqualTo, ValidationError
 from uavblog.models import User
 
@@ -66,3 +66,9 @@ class UpdateAccountForm(FlaskForm):
 			user = User.query.filter_by(email = email.data).first()
 			if user:
 				raise ValidationError('That email already exists')
+
+'''creating the post information'''
+class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    content = TextAreaField('Content', validators=[DataRequired()])
+    submit = SubmitField('Post')

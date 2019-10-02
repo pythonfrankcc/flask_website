@@ -8,8 +8,8 @@
 		<article class="media content-section">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author }}</a>
-              <small class="text-muted">{{ post.date_posted }}</small>
+              <a class="mr-2" href="#">{{ post.author.tutor_username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
               <!-- the templating engine that flask uses is ginger 2 which allows the use of code blocks-->
               <!-- printing a variable is not the same as a code block so you use double curly braces -->
             </div>

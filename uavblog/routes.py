@@ -4,32 +4,18 @@ import os#allows you to upload file as the extension that they uploades
 from PIL import Image
 from flask import render_template, url_for, flash, redirect,request
 from uavblog import app, db, bcrypt
-from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm,PostForm
 from datetime import datetime
 from uavblog.models import User, Post
 from flask_login import login_user,current_user, logout_user, login_required
 #the login_required module ensures that you cannot view the account page until you have been logged in 
 
 
-posts = [
-  {
-   "author":"Dr. Mary",
-   "title":"UAV Design1",
-   "content":"First class to do this course work",
-   "date_posted":datetime.utcnow().replace(second=0, microsecond=0)
-  },
-  {
-    "author":"Professor Sameer",
-    "title":"UAV Design2",
-    "content":"First class to do this course work",
-    "date_posted":datetime.utcnow().replace(second=0, microsecond=0)#this keeps updating to the current time and you do not want that
-  }
-]
-
 @app.route("/")#decorators using the init in the uavblog
 @app.route("/home")
 def home():
-	return render_template ("home.html",posts = posts)
+  posts = Post.query.all()
+	return render_template ("home.html")
 
 @app.route("/about")
 def about():
@@ -117,3 +103,16 @@ def account():
   return render_template('account.html', title='Account',
                            image_file=image_file, form=form)  
 #this allows you to pass in the image file onto the accounts template as a variable image file
+
+@app.route("/post/new", methods=['GET', 'POST'])
+@login_required
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been created!', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_post.html', title='New Post',
+                           form=form, legend='New Post')

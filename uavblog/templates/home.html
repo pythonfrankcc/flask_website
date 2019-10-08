@@ -1,4 +1,4 @@
-<!-- the sites home page ovewrite layout -->
+the sites home page ovewrite layout -->
 {% extends "layout.html" %}
 <!-- inheriting from the layout.html -->
 <!-- allowing the content in the body to be able to ovewrite what is in the block content -->
@@ -6,14 +6,19 @@
 	{% for post in posts %}
   <!-- look at the first tutorial for the original code though it was less appealing but atleast you could input large sums of data -->
 		<article class="media content-section">
+          <img class =''rounded-circle article-img'' src="{{ url_for(''static'', filename=''procfile_pics/'' + post.author.image_file) }}">
+          <!-- the author is a backref that gives us access to the user and all their attributes thius even acquiring the image attached to that user -->
           <div class="media-body">
             <div class="article-metadata">
               <a class="mr-2" href="#">{{ post.author.tutor_username }}</a>
-              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-              <!-- the templating engine that flask uses is ginger 2 which allows the use of code blocks-->
+              <!-- just print out the users username instead of printing out the whole user object -->
+              <small class="text-muted">{{ post.date_posted.strftime(''%Y-%m-%d'') }}</small>
+              <!-- this allows you to be able to display the time the post was created in a specific way -->
+              <!-- the templating engine that flask uses is jinja 2 which allows the use of code blocks-->
               <!-- printing a variable is not the same as a code block so you use double curly braces -->
             </div>
-            <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
+            <h2><a class="article-title" href="{{ 'post',post_id = post.id }}">{{ post.title }}</a></h2>
+            <!-- the reason why the above line is a href is so as to be able to link to the post html page that is being created -->
             <p class="article-content">{{ post.content }}</p>
             <p>
               This module covers the content of EASA Part 66 syllabus to Modules 12 and 13.  Helicopter Aerodynamics, Structures and Systems; Aircraft Aerodynamics, Structures and Systems to the Category B1.1, B1.2, B1.3, B1.4, Category B2, and Category C level
@@ -95,4 +100,4 @@
         </article>
 	{% endfor %}
 {% endblock content %}
-<!-- ginger two allows you to put the name of the block that you want to overwrite in the end of the code block -->
+<!-- ginger two allows you to put the name of the block that you want to overwrite in the end of the code block

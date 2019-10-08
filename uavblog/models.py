@@ -19,8 +19,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship('Post', backref='author', lazy=True)#lazy enables us to load the data from the database in a single go for sqlalchemy
-    #the posts in thhis model is not a column but is only used to show the relationship with the Post model while the backref allows us to get the user who created the Post
-
+    #the posts in this model is not a column but is only used to show the relationship with the Post model while the backref allows us to get the user who created the Post and all their attributes
     def __repr__(self):
         return f"User('{self.tutor_username}', '{self.email}', '{self.image_file}')"
 #__scr__ or __rpr_ shows how you want the user to look like when you print   

@@ -20,84 +20,8 @@ the sites home page ovewrite layout -->
             <h2><a class="article-title" href="{{ 'post',post_id = post.id }}">{{ post.title }}</a></h2>
             <!-- the reason why the above line is a href is so as to be able to link to the post html page that is being created -->
             <p class="article-content">{{ post.content }}</p>
-            <p>
-              This module covers the content of EASA Part 66 syllabus to Modules 12 and 13.  Helicopter Aerodynamics, Structures and Systems; Aircraft Aerodynamics, Structures and Systems to the Category B1.1, B1.2, B1.3, B1.4, Category B2, and Category C level
-
-              Prerequisites
-              The students will be expected to have working knowledge in the following areas:
-              (i) Basic programming knowledge in MATLAB, python or C/C++
-              (ii)  Control system theory
-              (iii) Instrumentation and Measurements
-              (iv)  Engineering Design
-
-              Objectives
-              The objectives of the Unit are to:-
-              (i) Comprehend the design of fixed and rotary wing UAV’s;
-              (ii)  Gain knowledge on the control systems for UAV’s;
-              (iii) Distinguish the different typed of propulsion systems for UAV’s;
-              (iv)  Enhance knowledge on the design and fabrication of UAV’s for a given application;
-              (v) Understand UAV maintenance practices and standards;
-              (vi)  Broaden understanding of autonomous navigation in UAV’s.
-
-
-              Expected Learning Outcomes
-
-              On successful completion of this Course Unit the learner should be able to:-
-              (i) Design  rotary and fixed wing UAV’s;
-              (ii)  Design micro gas turbine/electric systems for UAV’s;
-              (iii) Maintain UAV’s in accordance with OEM;
-              (iv)  Deploy UAV’s to carry out a specified mission;
-              (v) Describe and implement control systems theory to UAV’s;
-              (vi)  Perform UAV control system simulation using MATLAB and SIMULINK;
-              (vii) Appreciate the design and fabrication of rotary/fixed wing UAV’s for a given application using 3-D printing in terms of CAD and CAM techniques.
-
-              Course Description
-              Introduction to UAV’s and regulations, design and synthesis/sizing of rotary/fixed wing UAV’s, mission profile, RF (fuel ratio) method, propulsion design: electric and micro gas turbine, UAV controls, open software platforms, CAD, CAE, CAM techniques and fabrication, rotary/fixed wing UAV aerodynamics, UAV structural design, UAV dynamics, UAV- GPS, IMU, gyroscopes., mission control: direct line of sight, satellite, autopilot, autonomous navigation. Rapid prototyping using 3-D printing. Types of rotary wing UAV’s: single, compound, tandem, coaxial, notar.
-
-
-              Laboratory Experiments
-              (i) 3-D Printing/workshop techniques for building UAV components
-              (ii)  Systems simulations in MATLAB/SIMULINK
-
-
-              Teaching Strategy and Methodology 
-
-              (i) Lectures
-              (ii)  Tutorials
-              (iii) Class/Group Discussions and presentations
-
-              Instructional Materials/Equipment
-
-              LCD projectors, computers, chalkboards/whiteboards, ODL, Models, software.
-
-              Assessment/Assignment and Examination
-
-              Continuous Assessment (Individual/group assignments, Presentations, laboratory reports) will constitute 40%. And the end of semester exam will constitute 60%. The Pass mark shall be 40% of the total of 100%.
-
-              Course Monitoring and Evaluation
-
-              Students class attendance lists, Students evaluation of course and instructor at the end of the course, External examiner’s reports, External and internal auditor’s reports at the end of every semester of an academic year. 
-              Textbooks:
-
-              (i) Unmanned Air Systems: UAV Design, Development and Deployment
-              Reg Austin (2011)
-              Wiley, ISBN 978-0470058190
-              .
-              (ii)  Handbook for Unmanned Aerial Vehicles
-              Valavanis (2014)
-              Springer, ISBN 978-9048197064
-
-              Reference Textbooks
-              (i) Small Unmanned Fixed-wing Aircraft Design: A Practical Approach
-              Andrew Keane (2017)
-              Wiley, ISBN 978-1119406297
-
-              Journals
-              Journal of Aircraft, American Institute of Aeronautics and Astronautics
-              Journal of the American Helicopter Society, American Helicopter Society  
-</p>
           </div>
         </article>
 	{% endfor %}
 {% endblock content %}
-<!-- ginger two allows you to put the name of the block that you want to overwrite in the end of the code block
+<!-- jinja 2 allows you to put the name of the block that you want to overwrite in the end of the code block

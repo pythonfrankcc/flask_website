@@ -1,5 +1,5 @@
 '''route decorators to the various pages'''
-import secret#allows you to create a bunch of random names as the extension file for naming
+import secrets#allows you to create a bunch of random names as the extension file for naming
 import os#allows you to upload file as the extension that they uploades
 from PIL import Image
 from flask import render_template, url_for, flash, redirect,request,abort
@@ -14,8 +14,10 @@ from flask_login import login_user,current_user, logout_user, login_required
 @app.route("/")#decorators using the init in the uavblog
 @app.route("/home")
 def home():
-  posts = Post.query.all()#grabbing all the post from the database
-	return render_template ("home.html")
+    page = request.args.get('page', 1, type=int)#page is an optional parameter in the url,default page is set to one and the int dictates that if a person wants a page no thyen it must be equal to an interger
+    #posts = Post.query.all()#grabbing all the post from the database
+    posts = Post.query.paginate(page = page,per_page=5)#this allows you to specify the no of posts you want to display per page and this enhances the speed of your page and is a flask sqlalchemy module
+    return render_template ("home.html")
 
 @app.route("/about")
 def about():

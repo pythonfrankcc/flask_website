@@ -3,7 +3,8 @@ the sites home page ovewrite layout -->
 <!-- inheriting from the layout.html -->
 <!-- allowing the content in the body to be able to ovewrite what is in the block content -->
 {% block content %}
-	{% for post in posts %}
+	{% for post in posts.items %}
+  <!-- the main reason why we include the dot items is because now this is a pagination object -->
   <!-- look at the first tutorial for the original code though it was less appealing but atleast you could input large sums of data -->
 		<article class="media content-section">
           <img class =''rounded-circle article-img'' src="{{ url_for(''static'', filename=''procfile_pics/'' + post.author.image_file) }}">

@@ -2,7 +2,7 @@
 #here you import what you have pip installed
 #remember on importation of a module python runs the whole module
 from flask_wtf import FlaskForm#uses this instead of the html creation of the forms
-from flask_wtf.file FileField,FileAllowed#allows only specific files to be taken 
+from flask_wtf.file import FileField,FileAllowed#allows only specific files to be taken 
 from flask_login import current_user
 from wtforms import StringField#enables us to create strings for usernames and other string fields
 from wtforms import PasswordField,SubmitField,BooleanField,TextAreaField

@@ -16,7 +16,8 @@ from flask_login import login_user,current_user, logout_user, login_required
 def home():
     page = request.args.get('page', 1, type=int)#page is an optional parameter in the url,default page is set to one and the int dictates that if a person wants a page no thyen it must be equal to an interger
     #posts = Post.query.all()#grabbing all the post from the database
-    posts = Post.query.paginate(page = page,per_page=5)#this allows you to specify the no of posts you want to display per page and this enhances the speed of your page and is a flask sqlalchemy module
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page = page,per_page=5)#this allows you to specify the no of posts you want to display per page and this enhances the speed of your page and is a flask sqlalchemy module
+    #the order_by in the post alows you to be able to arrange the posts allowing the latest post to be at the top
     return render_template ("home.html")
 
 @app.route("/about")
@@ -155,3 +156,14 @@ def delete_post(post_id):
     db.session.commit()
     flash('Your post has been deleted!', 'success')
     return redirect(url_for('home'))
+
+#this route is used to display the posts that are associated with a specific user
+@app.route("/user/<string:username>")
+def user_posts(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(tutor_username=username).first_or_404()#the parameter username is from the route that we get from the route function
+    posts = Post.query.filter_by(author=user)\
+        .order_by(Post.date_posted.desc())\
+        .paginate(page=page, per_page=5)
+    return render_template('user_posts.html', posts=posts, user=user)#create a user_posts.html that handles all the posts for a specific user
+#a backslash allows you to break a line into multiple lines

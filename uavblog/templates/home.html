@@ -24,5 +24,19 @@ the sites home page ovewrite layout -->
           </div>
         </article>
 	{% endfor %}
+  <!-- creating links to the pages that we want and the class is just for aesthetics -->
+  {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+  <!-- the code in the brackets reduces the amount of page links that are going to be highelighted -->
+      {% if page_num %}
+        {% if posts.page == page_num %}
+          <!-- using bootstrap the btn btn-info without an outline just outlines the selected page with a dark colour -->
+          <a class="btn btn-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
 {% endblock content %}
 <!-- jinja 2 allows you to put the name of the block that you want to overwrite in the end of the code block

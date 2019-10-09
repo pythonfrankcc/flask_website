@@ -11,7 +11,7 @@ the sites home page ovewrite layout -->
           <!-- the author is a backref that gives us access to the user and all their attributes thius even acquiring the image attached to that user -->
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="#">{{ post.author.tutor_username }}</a>
+              <a class="mr-2" href="{{ url_for('user_posts', username=post.author.tutor_username) }}">{{ post.author.tutor_username }}</a>
               <!-- just print out the users username instead of printing out the whole user object -->
               <small class="text-muted">{{ post.date_posted.strftime(''%Y-%m-%d'') }}</small>
               <!-- this allows you to be able to display the time the post was created in a specific way -->

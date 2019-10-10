@@ -3,12 +3,14 @@ import secrets#allows you to create a bunch of random names as the extension fil
 import os#allows you to upload file as the extension that they uploades
 from PIL import Image
 from flask import render_template, url_for, flash, redirect,request,abort
-from uavblog import app, db, bcrypt
-from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm,PostForm
+from uavblog import app, db, bcrypt,mail
+from uavblog.forms import RegistrationForm, LoginForm, UpdateAccountForm,PostForm, RequestResetForm, ResetPasswordForm
+#from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,PostForm, RequestResetForm, ResetPasswordForm)#alternatively if your imports get too many you can do this which is putting all your imports in a bracket
 from datetime import datetime
 from uavblog.models import User, Post
 from flask_login import login_user,current_user, logout_user, login_required
 #the login_required module ensures that you cannot view the account page until you have been logged in 
+from flask_mail import Message
 
 
 @app.route("/")#decorators using the init in the uavblog
@@ -146,7 +148,7 @@ def update_post(post_id):
     return render_template('create_post.html', title='Update Post',
                            form=form, legend='Update Post')
 
-@app.route("/post/<int:post_id>/delete", methods=['POST'])#allows only post from the modal created 
+@app.route("/post/<int:post_id>/delete", methods=['POST'])
 @login_required
 def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
@@ -158,6 +160,7 @@ def delete_post(post_id):
     return redirect(url_for('home'))
 
 #this route is used to display the posts that are associated with a specific user
+
 @app.route("/user/<string:username>")
 def user_posts(username):
     page = request.args.get('page', 1, type=int)
@@ -167,3 +170,46 @@ def user_posts(username):
         .paginate(page=page, per_page=5)
     return render_template('user_posts.html', posts=posts, user=user)#create a user_posts.html that handles all the posts for a specific user
 #a backslash allows you to break a line into multiple lines
+
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request',
+                  sender='noreply@demo.com',
+                  recipients=[user.email])
+    msg.body = f'''To reset your password, visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+If you did not make this request then simply ignore this email and no changes will be made.
+'''
+    mail.send(msg)
+#remember when passing a variable to an f'string we only use a single curly braces unlike 2 curly braces that we are used to seeing in the jinja 2 templates
+#_external = True is used in order to get an absolute url rather than a relative url(this are used within the locality of our application ) but absolute like the one we want we want to have the full domain since its email but if your message is  complicated enough you will need to use the jinja templates to create the message
+
+
+@app.route("/reset_password", methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('An email has been sent with instructions to reset your password.', 'info')
+        return redirect(url_for('login'))
+    return render_template('reset_request.html', title='Reset Password', form=form)
+
+@app.route("/reset_password/<token>", methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = User.verify_reset_token(token)#inheritance from the model page
+    if user is None:
+        flash('That is an invalid or expired token', 'warning')#the tag on the message is a yellow one 
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_password
+        db.session.commit()
+        flash('Your password has been updated! You are now able to log in', 'success')
+        return redirect(url_for('login'))
+    return render_template('reset_token.html', title='Reset Password', form=form)

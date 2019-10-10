@@ -44,11 +44,11 @@
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
+                <small class="text-muted ml-2">
+                    <a href="{{ url_for('reset_request') }}">Forgot Password?</a>
+                    <!-- this is a dummy url for now so as to be able to control how one is resent a re-registration -->
+                </small>
             </div>
-            <small class="text-muted ml-2">
-                <a href="#">Forgot Password?</a>
-                <!-- this is a dummy url for now so as to be able to control how one is resent a re-registration -->
-            </small>
         </form>
     </div>
     <div class="border-top pt-3">

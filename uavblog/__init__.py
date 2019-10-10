@@ -21,20 +21,24 @@ login_manager.login_message_category = 'info'#changes the category of the flash 
  
 mail = Mail()
 #mind the positioning of the importation so as to avoid circular importation since the routes are making the importation of the app
+#allows for easy unitesting and also creation of various instances of the app
 def create_app(config_class=Config):
-	#the arguement is what configuration object you want to use
     app = Flask(__name__)
     app.config.from_object(Config)
-    #the four extensions used
+    #the four extensions
     db.init_app(app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
-	from uavblog.users.routes import users
-	from uavblog.posts.routes import posts
-	from uavblog.main.routes import main
-	app.register_blueprint(users)
-	app.register_blueprint(posts)
-	app.register_blueprint(main)
+
+    from uavblog.users.routes import users
+    from uavblog.posts.routes import posts
+    from uavblog.main.routes import main
+    from uavblog.errors.handlers import errors
+    app.register_blueprint(users)
+    app.register_blueprint(posts)
+    app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app
+#an error 500 is a general server error 

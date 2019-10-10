@@ -4,11 +4,11 @@
     <img class="rounded-circle article-img" src="{{ url_for('static', filename='procfile_pics/' + post.author.image_file) }}">
     <div class="media-body">
       <div class="article-metadata">
-        <a class="mr-2" href="{{ url_for('user_posts', username=post.author.tutor_username) }}">{{ post.author.tutor_username }}</a>
+        <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.tutor_username) }}">{{ post.author.tutor_username }}</a>
         <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
         {% if post.author == current_user %}
           <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('posts.update_post', post_id=post.id) }}">Update</a>
             <!-- sm means small for the bootstrap button that we want to place in the page -->
             <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
             <!-- a modal is actually a pop up that blurs everything on the page withits pop up leaving it as the only visible page and you should take care of the places within the creation of the modal to make sure that they all conform to delete modal -->
@@ -32,7 +32,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+          <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
             <input class="btn btn-danger" type="submit" value="Delete">
           </form>
         </div>

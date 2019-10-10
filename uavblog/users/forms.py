@@ -1,13 +1,13 @@
-'''the database structure of the site'''
-#here you import what you have pip installed
-#remember on importation of a module python runs the whole module
-from flask_wtf import FlaskForm#uses this instead of the html creation of the forms
-from flask_wtf.file import FileField,FileAllowed#allows only specific files to be taken 
+''''importing the relevant dependencies'''
+from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
-from wtforms import StringField#enables us to create strings for usernames and other string fields
-from wtforms import PasswordField,SubmitField,BooleanField,TextAreaField
-from wtforms.validators import DataRequired, Length ,Email,EqualTo, ValidationError
 from uavblog.models import User
+
+
+
 
 class RegistrationForm(FlaskForm):
 	tutor_username = StringField('Tutor Username',
@@ -42,7 +42,7 @@ class LoginForm(FlaskForm):
 	submit = SubmitField("Login")
 
 
-#now lets create a login form
+#now lets create a update form
 class UpdateAccountForm(FlaskForm):
 	tutor_username = StringField('Tutor Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
@@ -67,12 +67,8 @@ class UpdateAccountForm(FlaskForm):
 			if user:
 				raise ValidationError('That email already exists')
 
-'''creating the post information'''
-class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    submit = SubmitField('Post')
 
+''''creating a requestreset form for the users to be able to change their login credentials'''
 class RequestResetForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])

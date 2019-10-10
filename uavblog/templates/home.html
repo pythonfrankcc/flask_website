@@ -11,14 +11,14 @@ the sites home page ovewrite layout -->
           <!-- the author is a backref that gives us access to the user and all their attributes thius even acquiring the image attached to that user -->
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{{ url_for('user_posts', username=post.author.tutor_username) }}">{{ post.author.tutor_username }}</a>
+              <a class="mr-2" href="{{ url_for('user.user_posts', username=post.author.tutor_username) }}">{{ post.author.tutor_username }}</a>
               <!-- just print out the users username instead of printing out the whole user object -->
               <small class="text-muted">{{ post.date_posted.strftime(''%Y-%m-%d'') }}</small>
               <!-- this allows you to be able to display the time the post was created in a specific way -->
               <!-- the templating engine that flask uses is jinja 2 which allows the use of code blocks-->
               <!-- printing a variable is not the same as a code block so you use double curly braces -->
             </div>
-            <h2><a class="article-title" href="{{ 'post',post_id = post.id }}">{{ post.title }}</a></h2>
+            <h2><a class="article-title" href="{{url_for ('posts.post',post_id = post.id)}}">{{ post.title }}</a></h2>
             <!-- the reason why the above line is a href is so as to be able to link to the post html page that is being created -->
             <p class="article-content">{{ post.content }}</p>
           </div>
@@ -30,9 +30,9 @@ the sites home page ovewrite layout -->
       {% if page_num %}
         {% if posts.page == page_num %}
           <!-- using bootstrap the btn btn-info without an outline just outlines the selected page with a dark colour -->
-          <a class="btn btn-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+          <a class="btn btn-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
         {% else %}
-          <a class="btn btn-outline-info mb-4" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('main.home', page=page_num) }}">{{ page_num }}</a>
         {% endif %}
       {% else %}
         ...
